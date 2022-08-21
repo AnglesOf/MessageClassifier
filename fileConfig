@@ -1,0 +1,12 @@
+[orgFile]
+stopwordsfile = .\data\停用词表.txt
+idictfile = .\data\entityDict.txt
+orgdata = .\data\附件二.xlsx
+processed_date = .\data\处理结果数据.xlsx
+
+[model]
+svcmodel = .\model\SVC模型.pkl
+bayesmodel = .\model\Bayes模型.pkl
+tfidf_vecmodel = .\model\tfidfVectorizer.pickle
+bow_vecmodel = .\model\countVectorizer.pickle
+GRUmodel = ./model/GRU.pkl

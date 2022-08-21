@@ -45,13 +45,13 @@
 
 ​	首先对数据进行清洗、分词、去除停用词后，使用TF-IDF、词袋模型、word2vec工具对文本进行向量化，使用TF-IDF矩阵和BOW矩阵训练SVM模型和朴素贝叶斯模型，使用word2vec工具生成的embedding训练GRU模型，之后对这三种模型进行评价和分类效果对比。
 
-![image-20220821205559352](C:\Users\angle\AppData\Roaming\Typora\typora-user-images\image-20220821205559352.png)
+![image-20220821205559352](.\results\image-20220821205559352.png)
 
 ## 4、GRU分类模型架构图
 
 ​	GRU神经网络分类模型共分为Embedding层，GRU层，全连接层。首先将每个文本信息的one-hot编码作为Embedding层的输入，经过CBOW模型训练后生成每个词的词向量，one-hot编码的维度为83658，因此Embedding输入维度为83658，输出维度设为512。这将大大降低词向量的维度，方便进行下游任务。之后将这些词向量作为GRU层的输入，GRU的输入维度为512，这与词向量维度保持一致，输出维度为128，利用这些时间序列训练GRU单元得到隐藏层输出$h_n$，然后再将$h_n$作为全连接层的输入，全连接层的输出维度和类型个数相同，因此设置为7维，最后利用交叉熵损失函数计算损失，计算出损失值后进行反向传播更新模型参数。模型具体表述如图 4所示。
 
-<img src="C:\Users\angle\AppData\Roaming\Typora\typora-user-images\image-20220821210025849.png" alt="image-20220821210025849" style="zoom:150%;" />
+<img src=".\results\image-20220821210025849.png" alt="image-20220821210025849" style="zoom:150%;" />
 
 ## 5、分类结果报告
 

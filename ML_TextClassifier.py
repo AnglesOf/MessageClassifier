@@ -12,7 +12,7 @@ import seaborn as sns
 from data_process import text_process, text2vector
 
 
-def tarin_model(data, labels, textVectorizer,  model, modelName):
+def tarin_model(data, labels, textVectorizer,  model, modelName, textVectorModelNames):
     """
     模型训练和保存
     :param data: 处理好后的训练数据列表
@@ -31,7 +31,8 @@ def tarin_model(data, labels, textVectorizer,  model, modelName):
     score = accuracy_score(y_pred, y_test)  # 计算准确率
     # print('accuracy %s' % score)
     # 保存模型
-    # joblib.dump(model, saveModelFile)
+    saveModelFile = ".\\model\\" + modelName + "模型.pkl"
+    joblib.dump(model, saveModelFile)
 
     # 生成混淆矩阵
     plt.figure()
@@ -43,7 +44,7 @@ def tarin_model(data, labels, textVectorizer,  model, modelName):
     plt.ylabel('Actual results', fontsize=15)  # 设置X轴名称
     plt.xlabel('Prediction results', fontsize=15)  # 设置Y轴名称
     plt.title(modelName)  # 设置标题名称为模型名称
-    plt.savefig(".\\results\\" + modelName + '_confusion_matrix.png')  # 保存混淆矩阵图片
+    plt.savefig(".\\results\\" + modelName + "_" + textVectorModelNames + '_confusion_matrix.png')  # 保存混淆矩阵图片
     # plt.show()
     # 模型评估报告，包含了Precision，Recall和F1-Score
     report = classification_report(y_test, y_pred, target_names=["城乡建设", "环境保护", "交通运输", "教育文体", "劳动和社会保障", "商贸旅游", "卫生计生"])
@@ -105,10 +106,12 @@ if __name__ == '__main__':
     scores = []  # 准确率存储列表
     reports = []  # 模型评估报告存储列表
     for i in range(len(models)):
+        vec_name_index = 0
         for textVectoriser in textVectorizers:
             # 开始训练模型
-            score, report = tarin_model(df, labels, textVectoriser, models[i], modelNames[i])
-            print("模型：", modelNames[i], "\t向量化：", textVectorModelNames[i], "\taccuracy：", score)
+            score, report = tarin_model(df, labels, textVectoriser, models[i], modelNames[i], textVectorModelNames[vec_name_index])
+            print("模型：", modelNames[i], "\t向量化：", textVectorModelNames[vec_name_index], "\taccuracy：", score)
+            print(report)
             scores.append(score)
             reports.append(report)
-
+            vec_name_index = vec_name_index + 1
